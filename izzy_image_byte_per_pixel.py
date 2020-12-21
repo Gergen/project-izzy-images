@@ -2,7 +2,6 @@
 """
 Created on Wed Nov 11 14:39:45 2020
 
-@author: Gerrit
 """
 import matplotlib
 
@@ -90,10 +89,11 @@ def change_ext( path, new_ext):
 
 
 image_list = [ 
-    { 'name': 'Izzy.png',    'max_colors': 16},
-    { 'name': 'carrot.png',  'max_colors': 16},
-    { 'name': 'vet.png',     'max_colors':  2},
-    { 'name': 'chocbar.png', 'max_colors': 16},
+    { 'name': 'Izzy.png',    'max_colors': 16, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT}, # Izzy is actually double height, is saved as 2 sprites
+    { 'name': 'carrot.png',  'max_colors': 16, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT},
+    { 'name': 'vet.png',     'max_colors':  2, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT},
+    { 'name': 'chocbar.png', 'max_colors': 16, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT},
+    { 'name': 'screen.png',  'max_colors': 16, 'sprite_width': FRAMEWIDTH, 'sprite_height': FRAMEHEIGHT},
 ]
 
 for image in image_list:
@@ -199,15 +199,15 @@ def save_part( img, width, from_line, to_line, image_out):
 # save all images as bin files and converted to use the palette we just created
 print(f"Converting images to palette...")
 for image in image_list:
-    (orig_img_path, img_path, img) = (image['name'], image['name_quant'], image['image'])
+    (orig_img_path, img_path, img, sprite_width, sprite_height) = (image['name'], image['name_quant'], image['image'], image['sprite_width'], image['sprite_height'])
     width = len(img[0])
-    assert width == SPRITEWIDTH
+    assert width == sprite_width
     height = len(img)
-    assert height % SPRITEHEIGHT == 0
-    assert int(height / SPRITEHEIGHT) <= 2 # allow for max double height sprites
+    assert height % sprite_height == 0
+    assert int(height / sprite_height) <= 2 # allow for max double height sprites
     print(f"Processing {img_path} width={width} height={height}")
     # now some special logic to allow for double height sprites
-    is_double_height = int(height / SPRITEHEIGHT) == 2
+    is_double_height = int(height / sprite_height) == 2
 
     if is_double_height:
         image_out = os.path.join(output_dir, change_ext( append_suffix( orig_img_path, '_t'), '.bin'))
