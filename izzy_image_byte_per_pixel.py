@@ -93,7 +93,10 @@ image_list = [
     { 'name': 'carrot.png',  'max_colors': 16, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT},
     { 'name': 'vet.png',     'max_colors':  2, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT},
     { 'name': 'chocbar.png', 'max_colors': 16, 'sprite_width': SPRITEWIDTH, 'sprite_height': SPRITEHEIGHT},
-    { 'name': 'screen.png',  'max_colors': 16, 'sprite_width': FRAMEWIDTH, 'sprite_height': FRAMEHEIGHT},
+    # { 'name': 'screen.png',  'max_colors': 16, 'sprite_width': FRAMEWIDTH, 'sprite_height': FRAMEHEIGHT},
+    { 'name': 'menu.png',  'max_colors': 16, 'sprite_width': FRAMEWIDTH, 'sprite_height': FRAMEHEIGHT},
+    { 'name': 'rules.png',  'max_colors': 42, 'sprite_width': FRAMEWIDTH, 'sprite_height': FRAMEHEIGHT},
+    { 'name': 'dead.png',  'max_colors': 20, 'sprite_width': FRAMEWIDTH, 'sprite_height': FRAMEHEIGHT},
 ]
 
 for image in image_list:
@@ -107,6 +110,11 @@ for image in image_list:
 for image in image_list:
     (name_quant) = (image['name_quant'])
     print(f"Reading {name_quant}")
+    # See docs https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imread.html
+    # Returned array has shape
+    #     (M, N) for grayscale images.
+    #     (M, N, 3) for RGB images.  => this is our case for now
+    #     (M, N, 4) for RGBA images.
     image['image'] = mpimg.imread(os.path.join(output_dir, name_quant))
 
 # create the palette from all the colors in the loaded images
